@@ -3,8 +3,8 @@ import cv2
 if __name__ == '__main__':
 
     # 画像の読み込み
-    img_src1 = cv2.imread("background_image.jpg", 1)
-    img_src2 = cv2.imread("frontground_image.jpg", 1)
+    img_src1 = cv2.imread("./images/DSC_0080_1.jpg", 1)
+    img_src2 = cv2.imread("./images/DSC_0081_1.jpg", 1)
 
     fgbg = cv2.bgsegm.createBackgroundSubtractorMOG()
 
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     fgmask = fgbg.apply(img_src2)
 
     # 表示
-    cv2.imshow('frame',fgmask)
+    # cv2.imshow('frame',fgmask)
 
     # 検出画像
     bg_diff_path  = './diff.jpg'
