@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import cv2
 import numpy as np
 from PIL import Image
@@ -62,6 +64,10 @@ def out_csv():
 reconize()
 """
 
+with open('./projects/csv/input.csv') as f:
+    reader = csv.reader(f)
+    l = [list(map(int, row)) for row in reader]
+
 # git clone した pytorch_yolov3 ディレクトリのパスを指定してください
 yolov3_path = Path("./projects/pytorch_yolov3")
 
@@ -71,25 +77,17 @@ from yolov3.detector import Detector
 config_path = yolov3_path / "config/yolov3_coco.yaml"
 weights_path = yolov3_path / "weights/yolov3.weights"
 
-
-def imshow(img):
-    """ndarray 配列をインラインで Notebook 上に表示する。
-    """
-    ret, encoded = cv2.imencode(".jpg", img)
-    display(Image(encoded))
-
-
-# 検出器を作成する。
+# 検出器を作成
 detector = Detector(config_path, weights_path)
 
 # 画像を読み込む。
-img = cv2.imread("./projects/images/test_03.jpg")
+img = cv2.imread("./projects/images/sample.png")
 
 # 検出する。
 detections = detector.detect_from_imgs(img)
 
 # 車両の検出結果のみ抽出する。
-target = ["bicycle", "car", "motorcycle", "bus", "truck"]
+target = ["bicycle", "car", "motorcycle", "cell phone"]
 cars = list(filter(lambda x: x["class_name"] in target, detections[0]))
 
 # 検出結果を画像に描画する。
@@ -102,7 +100,18 @@ for bbox in cars:
         thickness=2,
     )
 
-print(cars)
-cv2.imwrite('projects/images/test_04.jpg', img)
+for coordinate in l:
+    for bbox in cars:
+        print(bbox["x1"], bbox["x2"], bbox["y1"], bbox["y2"])
+        x = coordinate[0] < int(bbox["x1"]) and int(bbox["x2"]) < coordinate[2] 
+        y = coordinate[1] > int(bbox["y1"]) and int(bbox["y2"]) > coordinate[3]
+        print(x,y)
+
+
+# print(len(cars))
+
+# print(cars)
+
+cv2.imwrite('projects/images/sample_1.png', img)
 
 
