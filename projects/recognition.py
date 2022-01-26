@@ -9,7 +9,7 @@ import pprint
 
 import sys
 from pathlib import Path
-from IPython.display import Image, display
+# from IPython.display import Image, display
 
 """
 def reconize():
