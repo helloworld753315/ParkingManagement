@@ -6,7 +6,11 @@ import time
 import csv
 import pprint
 
+import sys
+from pathlib import Path
+from IPython.display import Image, display
 
+"""
 def reconize():
     with open('./projects/csv/input.csv') as f:
         reader = csv.reader(f)
@@ -56,5 +60,49 @@ def out_csv():
 
 
 reconize()
+"""
+
+# git clone した pytorch_yolov3 ディレクトリのパスを指定してください
+yolov3_path = Path("./projects/pytorch_yolov3")
+
+sys.path.append(str(yolov3_path))
+from yolov3.detector import Detector
+
+config_path = yolov3_path / "config/yolov3_coco.yaml"
+weights_path = yolov3_path / "weights/yolov3.weights"
+
+
+def imshow(img):
+    """ndarray 配列をインラインで Notebook 上に表示する。
+    """
+    ret, encoded = cv2.imencode(".jpg", img)
+    display(Image(encoded))
+
+
+# 検出器を作成する。
+detector = Detector(config_path, weights_path)
+
+# 画像を読み込む。
+img = cv2.imread("./projects/images/test_03.jpg")
+
+# 検出する。
+detections = detector.detect_from_imgs(img)
+
+# 車両の検出結果のみ抽出する。
+target = ["bicycle", "car", "motorcycle", "bus", "truck"]
+cars = list(filter(lambda x: x["class_name"] in target, detections[0]))
+
+# 検出結果を画像に描画する。
+for bbox in cars:
+    cv2.rectangle(
+        img,
+        (int(bbox["x1"]), int(bbox["y1"])),
+        (int(bbox["x2"]), int(bbox["y2"])),
+        color=(0, 255, 0),
+        thickness=2,
+    )
+
+print(cars)
+cv2.imwrite('projects/images/test_04.jpg', img)
 
 
