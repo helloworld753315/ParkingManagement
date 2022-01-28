@@ -13,5 +13,4 @@ def range(path):
         csvw = csv.writer(outf)
         csvw.writerows(r)
 
-
 range("cap_02.jpg")

@@ -8,9 +8,12 @@ import numpy as np
 import time
 import csv
 import pprint
+import glob
+import os
 
 import sys
 from pathlib import Path
+# import caputure.job
 
 
 def availabilityInfo(img, a, b, c, d):
@@ -32,17 +35,22 @@ def main():
         rois = list(csvr)
         rois = [[int(float(j)) for j in i] for i in rois]
 
-        path = "./projects/images/cap_02.jpg"
+    list_of_files = glob.glob('./projects/images/*')  # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime)
+
+    path = "./projects/images/cap_02.jpg"
+
+    # path = latest_file
 
     img = cv2.imread(path)
 
     count = 0
     for i in range(len(rois)):
         available = availabilityInfo(img, rois[i][0], rois[i][1], rois[i][2], rois[i][3])
-        print(available)
         if available:
             count += 1
     print(count)
+
     
 
 if __name__ == "__main__":
