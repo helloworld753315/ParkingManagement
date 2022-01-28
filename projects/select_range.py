@@ -26,6 +26,7 @@ def range(path):
     df = df.append(record, ignore_index=True)
     print(df)
     """
+
     image = cv2.imread("./projects/images/" + path)
     r = cv2.selectROIs('Selector', image, showCrosshair=False, fromCenter=False)
 

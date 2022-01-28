@@ -70,9 +70,8 @@ with open('./projects/csv/input.csv') as f:
     l = [list(map(int, row)) for row in reader]
 """
 
+
 def drawRectangle(img, a, b, c, d):
-    lowThreshold = 100
-    highThreshold = 200
     sub_img = img[b:b + d, a:a + c]
 
     edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
@@ -84,6 +83,8 @@ def drawRectangle(img, a, b, c, d):
     else:
         cv2.rectangle(img, (a, b), (a + c, b + d), (0, 0, 255), 3)
 
+
+"""
 def callback(foo):
     pass
 
@@ -93,6 +94,8 @@ cv2.createTrackbar('Threshold2', 'parameters', 122, 700, callback)
 cv2.createTrackbar('Min pixels', 'parameters', 100, 1500, callback)
 cv2.createTrackbar('Max pixels', 'parameters', 323, 1500, callback)
 
+"""
+
 class spots:
     loc = 0
 
@@ -101,9 +104,27 @@ with open('./projects/csv/input.csv', 'r', newline='') as inf:
     rois = list(csvr)
 
 rois = [[int(float(j)) for j in i] for i in rois]
-VIDEO_SOURCE = 0
-cap = cv2.VideoCapture(VIDEO_SOURCE)
 
+min = 10
+max = 20
+lowThreshold = 400
+highThreshold = 100
+
+path = "./projects/images/cap_01.jpg"
+
+img = cv2.imread(path)
+
+for i in range(len(rois)):
+    drawRectangle(img, rois[i][0], rois[i][1], rois[i][2], rois[i][3])
+
+print(spots.loc)
+
+
+# img = cv2.Canny(img, lowThreshold, highThreshold)
+
+cv2.imwrite('./projects/images/return.jpg', img)
+
+"""
 while True:
     spots.loc = 0
 
@@ -129,6 +150,8 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
+"""
 
 
 """
