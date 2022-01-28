@@ -80,14 +80,15 @@ def detector(path="./projects/images/cap_02.jpg"):
 def drawRectangle(img, a, b, c, d):
     sub_img = img[b:b + d, a:a + c]
 
-    edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
-    pix = cv2.countNonZero(edges)
+    lowThreshold = 200
+    highThreshold = 1000
 
-    if pix in range(min, max):
-        cv2.rectangle(img, (a, b), (a + c, b + d), (0, 255, 0), 3)
-        spots.loc += 1
-    else:
-        cv2.rectangle(img, (a, b), (a + c, b + d), (0, 0, 255), 3)
+    gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
+    contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    count_objects_image = len(contours)
+    print(count_objects_image)
+
 
 class spots:
     loc = 0
@@ -99,12 +100,7 @@ with open('./projects/csv/input.csv', 'r', newline='') as inf:
 
 rois = [[int(float(j)) for j in i] for i in rois]
 
-min = 1
-max = 2
-lowThreshold = 2
-highThreshold = 1
-
-path = "./projects/images/cap_01.jpg"
+path = "./projects/images/cap_02.jpg"
 
 img = cv2.imread(path)
 

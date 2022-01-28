@@ -105,10 +105,10 @@ with open('./projects/csv/input.csv', 'r', newline='') as inf:
 
 rois = [[int(float(j)) for j in i] for i in rois]
 
-min = 1
-max = 2
-lowThreshold = 2
-highThreshold = 1
+min = 10
+max = 20
+lowThreshold = 400
+highThreshold = 100
 
 path = "./projects/images/cap_01.jpg"
 
