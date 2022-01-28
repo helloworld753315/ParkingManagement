@@ -5,7 +5,6 @@ import cv2
 import numpy as np
 
 import numpy as np
-from PIL import Image
 import time
 import csv
 import pprint
@@ -14,11 +13,11 @@ import sys
 from pathlib import Path
 
 
-def drawRectangle(img, a, b, c, d):
+def availabilityInfo(img, a, b, c, d):
     sub_img = img[b:b + d, a:a + c]
 
     lowThreshold = 200
-    highThreshold = 1000
+    highThreshold = 800
 
     gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
@@ -27,15 +26,24 @@ def drawRectangle(img, a, b, c, d):
     return bool(count_objects_image)
 
 
-with open('./projects/csv/input.csv', 'r', newline='') as inf:
-    csvr = csv.reader(inf)
-    rois = list(csvr)
+def main():
+    with open('./projects/csv/input.csv', 'r', newline='') as inf:
+        csvr = csv.reader(inf)
+        rois = list(csvr)
+        rois = [[int(float(j)) for j in i] for i in rois]
 
-rois = [[int(float(j)) for j in i] for i in rois]
+        path = "./projects/images/cap_02.jpg"
 
-path = "./projects/images/cap_02.jpg"
+    img = cv2.imread(path)
 
-img = cv2.imread(path)
+    count = 0
+    for i in range(len(rois)):
+        available = availabilityInfo(img, rois[i][0], rois[i][1], rois[i][2], rois[i][3])
+        print(available)
+        if available:
+            count += 1
+    print(count)
+    
 
-for i in range(len(rois)):
-    drawRectangle(img, rois[i][0], rois[i][1], rois[i][2], rois[i][3])
+if __name__ == "__main__":
+    main()
