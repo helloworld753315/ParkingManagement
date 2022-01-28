@@ -35,4 +35,4 @@ def range(path):
         csvw.writerows(r)
 
 
-range("sample.png")
+range("cap_01.jpg")
