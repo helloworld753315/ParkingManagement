@@ -1,8 +1,10 @@
 from email.mime import image
+from importlib.resources import path
 import cv2
+import numpy as np
 
-"""
-cap = cv2.VideoCapture("./projects/images/vtest.avi")
+# cap = cv2.VideoCapture("./projects/images/vtest.avi")
+cap = cv2.VideoCapture(0)
 wait_secs = int(1000 / cap.get(cv2.CAP_PROP_FPS))
 
 model = cv2.createBackgroundSubtractorMOG2()
@@ -32,16 +34,17 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-"""
 
+
+"""
 def detector(path="./projects/images/cap_02.jpg"):
 
     model = cv2.createBackgroundSubtractorMOG2()
 
-    background = cv2.imread("./projects/images/cap_01.jpg")
+    # background = cv2.imread("./projects/images/cap_01.jpg")
     img = cv2.imread(path)
 
-    mask = model.apply(background)
+    # mask = model.apply(background)
     mask = model.apply(img)
 
     # 輪郭抽出する。
@@ -55,32 +58,7 @@ def detector(path="./projects/images/cap_02.jpg"):
 
     # 矩形を描画する。
     for x, y, w, h in bboxes:
-        cv2.rectangle(background, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-    cv2.imwrite('./projects/images/return.jpg', background)
-
+    cv2.imwrite('./projects/images/return.jpg', img)
 """
-# 画像の読み込み
-img_src1 = cv2.imread("./projects/images/cap_01.jpg", 1)
-img_src2 = cv2.imread("./projects/images/cap_02.jpg", 1)
-fgbg = cv2.createBackgroundSubtractorMOG2()
-fgmask = fgbg.apply(img_src1)
-fgmask = fgbg.apply(img_src2)
-
-# 輪郭抽出する。
-contours = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
-
-# 輪郭を囲む外接矩形を取得する。
-bboxes = list(map(lambda x: cv2.boundingRect(x), contours))
-
-# 矩形を描画する。
-for x, y, w, h in bboxes:
-    cv2.rectangle(img_src1, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-# 検出画像
-bg_diff_path = './projects/images/diff.jpg'
-cv2.imwrite(bg_diff_path, img_src1)
-"""
-
-
-detector()
