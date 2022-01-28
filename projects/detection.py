@@ -35,6 +35,8 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
+print()
+
 
 """
 def detector(path="./projects/images/cap_02.jpg"):
