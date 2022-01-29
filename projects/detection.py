@@ -57,11 +57,8 @@ def main():
     
 
 if __name__ == "__main__":
-    main()
-    """
     # 60秒に一回実行
     schedule.every(1).minutes.do(main)
     while True:
         schedule.run_pending()
         time.sleep(1)
-    """
