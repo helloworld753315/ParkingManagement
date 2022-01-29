@@ -41,7 +41,7 @@ def main():
     list_of_files = glob.glob('./projects/images/*')  # * means all if need specific format then *.csv
     latest_file = max(list_of_files, key=os.path.getctime)
 
-    path = "./projects/images/cap_02.jpg"
+    path = "./projects/images/image_20220129T113350.jpg"
 
     # path = latest_file
 
