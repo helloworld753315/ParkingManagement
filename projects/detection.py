@@ -24,7 +24,7 @@ def availabilityInfo(img, a, b, c, d):
     lowThreshold = 200
     highThreshold = 800
 
-    # gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
     contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     count_objects_image = len(contours)
@@ -41,9 +41,9 @@ def main():
     list_of_files = glob.glob('./projects/images/*')  # * means all if need specific format then *.csv
     latest_file = max(list_of_files, key=os.path.getctime)
 
-    # path = "./projects/images/cap_02.jpg"
+    path = "./projects/images/cap_02.jpg"
 
-    path = latest_file
+    # path = latest_file
 
     img = cv2.imread(path)
 
