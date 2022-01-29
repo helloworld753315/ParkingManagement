@@ -24,7 +24,7 @@ def availabilityInfo(img, a, b, c, d):
     lowThreshold = 200
     highThreshold = 800
 
-    gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
+    # gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
     contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     count_objects_image = len(contours)
@@ -44,10 +44,8 @@ def main():
     # path = "./projects/images/cap_02.jpg"
 
     path = latest_file
-    print(latest_file)
 
     img = cv2.imread(path)
-    print(img)
 
     count = 0
     for i in range(len(rois)):
