@@ -38,7 +38,6 @@ def main():
         rois = [[int(float(j)) for j in i] for i in rois]
 
     caputure.job()
-    """
     list_of_files = glob.glob('./projects/images/*')  # * means all if need specific format then *.csv
     latest_file = max(list_of_files, key=os.path.getctime)
 
@@ -55,12 +54,14 @@ def main():
             count += 1
     print(count)
     sheet.output(caputure.date(), count)
-    """
     
 
 if __name__ == "__main__":
+    main()
+    """
     # 60秒に一回実行
     schedule.every(1).minutes.do(main)
     while True:
         schedule.run_pending()
         time.sleep(1)
+    """
