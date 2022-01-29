@@ -44,8 +44,10 @@ def main():
     # path = "./projects/images/cap_02.jpg"
 
     path = latest_file
+    print(latest_file)
 
     img = cv2.imread(path)
+    print(img)
 
     count = 0
     for i in range(len(rois)):
