@@ -22,7 +22,7 @@ def availabilityInfo(img, a, b, c, d):
     sub_img = img[b:b + d, a:a + c]
 
     lowThreshold = 200
-    highThreshold = 800
+    highThreshold = 700
 
     gray = cv2.cvtColor(sub_img, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(sub_img, lowThreshold, highThreshold)
