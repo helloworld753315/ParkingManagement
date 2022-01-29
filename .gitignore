@@ -1,2 +1,4 @@
 projects/images
 projects/pytorch_yolov3
+*.json
+*.env
