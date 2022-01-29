@@ -13,4 +13,5 @@ def range(path):
         csvw = csv.writer(outf)
         csvw.writerows(r)
 
-range("cap_02.jpg")
+
+range("image_20220129T113350.jpg")
