@@ -5,6 +5,7 @@ load_dotenv()
 
 import os
 key = os.getenv('KEY')
+spreadsheet_key = os.getenv('SPREADSHEET_KEY')
 
 #ServiceAccountCredentials：Googleの各サービスへアクセスできるservice変数を生成します。
 from oauth2client.service_account import ServiceAccountCredentials
@@ -20,7 +21,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name("./projects/" + k
 gc = gspread.authorize(credentials)
 
 #共有設定したスプレッドシートキーを変数[SPREADSHEET_KEY]に格納する。
-SPREADSHEET_KEY = '1-3nhSI3oml_2IqYwz90uwAWO57xeG-Q3UJNq6L61PN8'
+SPREADSHEET_KEY = spreadsheet_key
 
 #共有設定したスプレッドシートのシート1を開く
 worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
