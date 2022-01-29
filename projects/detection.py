@@ -10,10 +10,12 @@ import csv
 import pprint
 import glob
 import os
+import sheet
 
 import sys
 from pathlib import Path
-# import caputure.job
+import caputure
+import schedule
 
 
 def availabilityInfo(img, a, b, c, d):
@@ -35,12 +37,13 @@ def main():
         rois = list(csvr)
         rois = [[int(float(j)) for j in i] for i in rois]
 
+    caputure.job()
     list_of_files = glob.glob('./projects/images/*')  # * means all if need specific format then *.csv
     latest_file = max(list_of_files, key=os.path.getctime)
 
-    path = "./projects/images/cap_02.jpg"
+    # path = "./projects/images/cap_02.jpg"
 
-    # path = latest_file
+    path = latest_file
 
     img = cv2.imread(path)
 
@@ -50,8 +53,13 @@ def main():
         if available:
             count += 1
     print(count)
+    sheet.output(caputure.date(), count)
 
     
 
 if __name__ == "__main__":
-    main()
+    # 60秒に一回実行
+    schedule.every(1).minutes.do(main)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

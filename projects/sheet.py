@@ -5,6 +5,7 @@ load_dotenv()
 
 import os
 key = os.getenv('KEY')
+spreadsheet_key = os.getenv('SPREADSHEET_KEY')
 
 #ServiceAccountCredentials：Googleの各サービスへアクセスできるservice変数を生成します。
 from oauth2client.service_account import ServiceAccountCredentials
@@ -20,15 +21,31 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name("./projects/" + k
 gc = gspread.authorize(credentials)
 
 #共有設定したスプレッドシートキーを変数[SPREADSHEET_KEY]に格納する。
-SPREADSHEET_KEY = '1-3nhSI3oml_2IqYwz90uwAWO57xeG-Q3UJNq6L61PN8'
+SPREADSHEET_KEY = spreadsheet_key
 
-#共有設定したスプレッドシートのシート1を開く
-worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
+#_________________________________
 
-#A1セルの値を受け取る
-import_value = 10
 
-#A1セルの値に100加算した値をB1セルに表示させる
-export_value = import_value+100
-worksheet.update_cell(1, 2, export_value)
+def next_available_row(sheet1):
+    str_list = list(filter(None, sheet1.col_values(2)))
+    return str(len(str_list) + 1)
+
+def output(value_1, value_2):
+
+    # column = 列
+    # value = 書き込む値
+
+    #共有設定したスプレッドシートのシート1を開く
+    worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
+
+    export_value_1 = value_1
+    export_value_2 = value_2
+
+    next_row = next_available_row(worksheet)
+
+    worksheet.update_cell(next_row, 1, export_value_1)
+    worksheet.update_cell(next_row, 2, export_value_2)
+
+
+
 
