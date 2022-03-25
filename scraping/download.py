@@ -28,7 +28,7 @@ def scroll_down(driver, height, speed):
 
 def scraping(chrome_driver, search_word):
     options = Options()
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--start-fullscreen')
@@ -39,9 +39,13 @@ def scraping(chrome_driver, search_word):
 
     driver.implicitly_wait(4)
 
-    # Google画像検索を開く
-    driver.get("https://www.google.co.jp/imghp?hl=ja")
+    url = f'https://www.google.com/search?q={search_word}&tbm=isch'
 
+    # Google画像検索を開く
+    driver.get(url)
+    
+
+    """
 
     # キーワード検索
     input_xpath = '//*[@id="sbtc"]/div/div[2]/input'
@@ -50,6 +54,8 @@ def scraping(chrome_driver, search_word):
     input_element.send_keys(search_word)
     # driver.find_element_by_xpath(search_xpath).send_keys(Keys.ENTER)
     input_element.send_keys(Keys.ENTER)
+    """
+
     time.sleep(1)
 
     # 画像一覧用のxpath
@@ -64,49 +70,30 @@ def scraping(chrome_driver, search_word):
     count = 0
     for thumbnail in thumbnails:
         thumbnail.click()
-        time.sleep(1)
-        image = driver.find_elements_by_xpath(images_xpath)[0].get_attribute("src")
-        print(count, ":", image)
-        count += 1
-        driver.back()
+        time.sleep(2)
+        image_element = driver.find_elements_by_xpath(images_xpath)
 
+        print("len:", len(image_element))
 
+        if len(image_element) > 0:
+            image = image_element[0].get_attribute("src")
+            print(count, ":", image)
+            count += 1
+            time.sleep(1)
+            driver.back()
     
-    
-
-
-
-
-
-
-    # for thumbnail in 
-
-
-
-    """
-    # 画像を保存
-    for i, link in enumerate(links):
-        try:
-            img = requests.get(link)
-            with open("img/" + "{}.jpg".format(i), "wb") as f:
-                f.write(img.content)
-
-            sleep(1)
-        except:
-            pass
-    """
-
+    print("終了します.")
     # ブラウザを終了
-    driver.close()
+    driver.quit()
 
 
 def main():
     # 検索ワードの指定
-    SEARCH_WORD = os.getenv('SEARCH_WORD')
+    QUERY = os.getenv('QUERY')
     DRIVER_PATH = os.getenv('DRIVER_PATH')
 
-    make_folder(SEARCH_WORD)
-    scraping(DRIVER_PATH, SEARCH_WORD)
+    make_folder(QUERY)
+    scraping(DRIVER_PATH, QUERY)
 
 if __name__ == "__main__":
     main()
