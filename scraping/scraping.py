@@ -9,6 +9,12 @@ from selenium.common.exceptions import ElementClickInterceptedException
 from dotenv import load_dotenv
 load_dotenv()
 
+def get_nowtime():
+    dt_now = datetime.datetime.now()  # 現在日時
+    dt_date_str = dt_now.strftime('%Y_%m_%d_%H%M')
+    return dt_date_str
+
+
 # 拡張子を取得
 def get_extension(url):
     # ダウンロード対象のファイル拡張子
@@ -55,7 +61,7 @@ def scraping(QUERY, LIMIT_DL_NUM, SAVE_DIR, FILE_NAME, TIMEOUT, ACCESS_WAIT, RET
     
     # Chromeをヘッドレスモードで起動
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--start-fullscreen')
@@ -99,6 +105,7 @@ def scraping(QUERY, LIMIT_DL_NUM, SAVE_DIR, FILE_NAME, TIMEOUT, ACCESS_WAIT, RET
     
     # 出力フォルダ作成
     os.makedirs(SAVE_DIR, exist_ok=True)
+    os.makedirs(f'{SAVE_DIR}/url', exist_ok=True)
                
     
     tm_thumbnails = time.time()
@@ -166,7 +173,7 @@ def scraping(QUERY, LIMIT_DL_NUM, SAVE_DIR, FILE_NAME, TIMEOUT, ACCESS_WAIT, RET
             print(f'{url}')
             continue
         
-        filename = f'{FILE_NAME}{count}{ext}'
+        filename = f'{FILE_NAME}_{get_nowtime()}_{count}{ext}'
         path = SAVE_DIR + '/' + filename
         result = download_image(driver, url, path, RETRY_NUM)
         if result == False:

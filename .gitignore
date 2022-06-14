@@ -1,6 +1,12 @@
 projects/images
-projects/pytorch_yolov3
+detection/pytorch_yolov3
 *.json
 *.env
 *.png
 *.jpg
+*.txt
+*.env
+/test_yolo_v5
+*.mp4
+
+

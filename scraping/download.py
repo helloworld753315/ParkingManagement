@@ -8,8 +8,14 @@ import time
 import requests
 import shutil
 import base64
+import datetime
 from dotenv import load_dotenv
 load_dotenv()
+
+def get_nowtime():
+    dt_now = datetime.datetime.now()  # 現在日時
+    dt_date_str = dt_now.strftime('%Y/%m/%d %H:%M')
+    return dt_date_str
 
 def make_folder(parent_path):
     os.makedirs("images", exist_ok=True)
@@ -26,9 +32,22 @@ def scroll_down(driver, height, speed):
         time.sleep(1)
         driver.execute_script("window.scrollTo(0, " + str(i) + ");")
 
+def save_image(src, file_save_path):
+
+    #Base64エンコードされた画像をデコードして保存する。
+    if "base64," in src:
+        with open(file_save_path, "wb") as f:
+            f.write(base64.b64decode(src.split(",")[1]))
+
+    #画像のURLから画像を保存する。
+    else:
+        res = requests.get(src, stream=True)
+        with open(file_save_path, "wb") as f:
+            shutil.copyfileobj(res.raw, f)
+
 def scraping(chrome_driver, search_word):
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--start-fullscreen')
@@ -43,44 +62,45 @@ def scraping(chrome_driver, search_word):
 
     # Google画像検索を開く
     driver.get(url)
-    
 
-    """
+    speed = 100
+    height = 2000
+    scroll_down(driver, height, speed)
 
-    # キーワード検索
-    input_xpath = '//*[@id="sbtc"]/div/div[2]/input'
-
-    input_element = driver.find_element_by_xpath(input_xpath)
-    input_element.send_keys(search_word)
-    # driver.find_element_by_xpath(search_xpath).send_keys(Keys.ENTER)
-    input_element.send_keys(Keys.ENTER)
-    """
-
-    time.sleep(1)
+    driver.implicitly_wait(3)
 
     # 画像一覧用のxpath
     thumbnails_xpath = '//*[@id="yDmH0d"]/div[2]/c-wiz/div[3]'
     thumbnails_container = driver.find_element_by_xpath(thumbnails_xpath)
     # 拡大画像用のxpath
     images_xpath = '//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div[2]/div/a/img'
-    speed = 100
-    height = 1000
-    scroll_down(driver, height, speed)
-    thumbnails = thumbnails_container.find_elements_by_tag_name('img')
-    count = 0
-    for thumbnail in thumbnails:
-        thumbnail.click()
-        time.sleep(2)
-        image_element = driver.find_elements_by_xpath(images_xpath)
+    # 画像一覧の1つ1つの画像class
+    image_class = 'Q4LuWd'
+    # サムネイルのclass
+    thumbnail_class = 'n3VNCb'
+    # 閉じるボタン
+    close_button_class = 'ggjbN'
 
-        print("len:", len(image_element))
+    time.sleep(3)
 
-        if len(image_element) > 0:
-            image = image_element[0].get_attribute("src")
-            print(count, ":", image)
-            count += 1
+    images = thumbnails_container.find_elements_by_class_name(image_class)
+
+    for image in images:
+        src = image.get_attribute("src")
+        if not(src == "None"):
             time.sleep(1)
-            driver.back()
+            image.click()
+            thumbnail = driver.find_element_by_class_name(thumbnail_class).get_attribute("src")
+            name = thumbnail
+            print("#########")
+            print(name)
+            print("#########")
+            time.sleep(2)
+            button = driver.find_element_by_class_name(close_button_class).click()
+            # save_image(thumbnail, file_save_path)
+
+    print("#", len(images))
+
     
     print("終了します.")
     # ブラウザを終了
