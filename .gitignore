@@ -8,5 +8,9 @@ detection/pytorch_yolov3
 *.env
 /test_yolo_v5
 *.mp4
+parking_app/**/node_modules
+datasets/**/*.csv
+
+
 
 
