@@ -10,6 +10,7 @@ detection/pytorch_yolov3
 *.mp4
 parking_app/**/node_modules
 datasets/**/*.csv
+*.DS_Store
 
 
 
