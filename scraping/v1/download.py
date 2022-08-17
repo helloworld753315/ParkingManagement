@@ -97,7 +97,7 @@ def scraping(chrome_driver, search_word):
             print("#########")
             time.sleep(2)
             button = driver.find_element_by_class_name(close_button_class).click()
-            # save_image(thumbnail, file_save_path)
+            save_image(thumbnail, file_save_path)
 
     print("#", len(images))
 
