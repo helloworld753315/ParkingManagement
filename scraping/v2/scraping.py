@@ -62,7 +62,7 @@ def scraping(QUERY, LIMIT_DL_NUM, SAVE_DIR, FILE_NAME, TIMEOUT, ACCESS_WAIT, RET
     
     # Chromeをヘッドレスモードで起動
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--start-fullscreen')

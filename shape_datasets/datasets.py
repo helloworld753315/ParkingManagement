@@ -4,7 +4,7 @@ import os
 import shutil
 
 # データセットの配分を計算 : 0.6, 0.2, 0.2のように全体が1になるよう指定
-def culc_rate(images, train, test, val):
+def culc_rate(images, train, val, test):
     images_len = len(images)
     train_lens = int(images_len * train) # trainの画像枚数
     test_lens = int(images_len * test) # testの画像枚数
@@ -35,7 +35,7 @@ def remove(dataset_path):
     txts = glob.glob("./datasets/**/*[.txt]")
 
     # データセットの配分
-    datasets_rate = culc_rate(images, 0.6, 0.2, 0.2)
+    datasets_rate = culc_rate(images, 0.8, 0.2, 0)
 
     # train/test/val
     train = []
@@ -70,7 +70,7 @@ def remove(dataset_path):
         shutil.copy(input_text_path, output_text_path)
 
     print("val作成...")
-    for image in test:
+    for image in val:
         input_text_path = f'./datasets/{dataset_path}/{image.split("/")[-1].split(".")[0]}.txt'
         output_image_path = f'./tmp/{dataset_path}/val'
         output_text_path = f'./tmp/{dataset_path}/val'
@@ -80,7 +80,7 @@ def remove(dataset_path):
 def main():
     load_dotenv()
 
-    dataset_path = os.environ['CLASSES']
+    dataset_path = os.environ['DATASET_PATH']
     make_dir(dataset_path)
 
     remove(dataset_path)

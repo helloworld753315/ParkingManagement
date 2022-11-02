@@ -10,7 +10,7 @@ function App() {
         駐車場情報見れるくん
       </h1>
       <header className="App-header">  
-        <ParkingInfo rate={0} />
+        <ParkingInfo rate={10} />
       </header>
     </div>
   );

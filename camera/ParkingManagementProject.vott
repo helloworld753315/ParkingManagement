@@ -1,0 +1,74 @@
+{
+    "name": "ParkingManagementProject",
+    "securityToken": "ParkingManagementProject Token",
+    "sourceConnection": {
+        "name": "ParkingManagement",
+        "providerType": "localFileSystemProxy",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiOWI0ZGFlZDU3MDdjYTgyZWU3OTZmZWZjZTg4NWJiOGVlOTFmMDQ0YTU3OGIxM2NjMTk3ZGI4ODM2YzRiZDA3ZWQ0ZDBkMmRiZWUyNDgwMmUxNDZiYzYyODhjYjE2MzliMTZiZGRkZjhiM2M5NjZkMjFiNjExOTRhNTk0YTFiMjBkODkxNDBlOTQ5NmZjYzI1NzhiNmE3ODI5MzYyZjc1YiIsIml2IjoiNTAxNDBjODNiYWJhZjcwOGJlYjAzODAxNjc4MGJmOWUyYjJhODllYTY1MDA2ODExIn0="
+        },
+        "id": "5r0pYyrko"
+    },
+    "targetConnection": {
+        "name": "ParkingManagement",
+        "providerType": "localFileSystemProxy",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiYjM5NDEzYThkYWUzZTQ5MTQ5YTgwZGViMGFjY2JiMGIzOGY2NDIwNGFjMzE1ZjFhMzQ2MTk0N2ZmODViOTllNWQ5YmM3Yzc3OGYwNmRlMDg1ZGNjMGFjMTFmZmNiZmNlMGQ0Nzg5YjhjZTM4N2YzYjBiM2YzNWFhYWMzZGE4MWE1YWVmNDVhOGMxN2M3MmVjYTE3NTBiN2U2MWY5OTZmYiIsIml2IjoiY2Y1YTQ0MWM0NGY0NTI2ZjVkMzNiNmRmYzc5ZjVjNjZjNmQ1ZjEyYTQ0YTdmNTgwIn0="
+        },
+        "id": "5r0pYyrko"
+    },
+    "description": "駐車場管理のアノテーションデータ作成。",
+    "videoSettings": {
+        "frameExtractionRate": 15
+    },
+    "tags": [
+        {
+            "name": "car",
+            "color": "#5db300"
+        }
+    ],
+    "id": "bcGxC1p5a",
+    "activeLearningSettings": {
+        "modelPathType": "coco",
+        "autoDetect": true,
+        "predictTag": true,
+        "modelPath": null,
+        "modelUrl": null
+    },
+    "exportFormat": {
+        "providerType": "vottJson",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiMWVkMmU0YTVmNjY0ZmViOTgzZjgyMmE5YTE2ODM0NjY3MDRiM2Q5MDdhOWJkYzk3Njk2ZDM5ZmMzNDg1YmRlNDFlZTdmNzM0YjIyZDY4YWE5NGE1NmI3YjE5OTg5MjViIiwiaXYiOiIyZWQxMGM5MTY2ZDIyZjE1YTRlNTFjOGY0NjljODA4OTlkZmI3ZDY2Y2QxNzIwODAifQ=="
+        }
+    },
+    "version": "2.2.0",
+    "lastVisitedAssetId": "1ed4fc1d5e4c069b4e3209b5ccca6045",
+    "assets": {
+        "adc6146b83b40d94bccff35f14d5c7cd": {
+            "format": "jpg",
+            "id": "adc6146b83b40d94bccff35f14d5c7cd",
+            "name": "sample_video_img_000.jpg",
+            "path": "file:/Users/helloworld/develop/ParkingManagement/camera/sample_video_img_000.jpg",
+            "size": {
+                "width": 1920,
+                "height": 1080
+            },
+            "state": 2,
+            "type": 1,
+            "predicted": true
+        },
+        "1ed4fc1d5e4c069b4e3209b5ccca6045": {
+            "format": "jpg",
+            "id": "1ed4fc1d5e4c069b4e3209b5ccca6045",
+            "name": "sample_video_img_020.jpg",
+            "path": "file:/Users/helloworld/develop/ParkingManagement/camera/sample_video_img_020.jpg",
+            "size": {
+                "width": 1920,
+                "height": 1080
+            },
+            "state": 2,
+            "type": 1,
+            "predicted": true
+        }
+    }
+}
